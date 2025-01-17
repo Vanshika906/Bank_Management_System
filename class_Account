@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ctime>
+using namespace std;
+
+// Account class
+class Account
+{
+private:
+    int accountNumber;
+    double balance;
+
+public:
+    Account(int accNumber, double initialBalance) : accountNumber(accNumber), balance(initialBalance) {}
+
+    int getAccountNumber() const
+    {
+        return accountNumber;
+    }
+
+    double getBalance() const
+    {
+        return balance;
+    }
+
+    void deposit(double amount)
+    {
+        balance += amount;
+    }
+
+    void withdraw(double amount)
+    {
+        if (amount <= 0)
+        {
+            throw invalid_argument("Withdraw amount must be positive.");
+        }
+
+        if (amount <= balance)
+        {
+            balance -= amount;
+        }
+        else
+        {
+            throw invalid_argument("Insufficient balance.");
+        }
+    }
+};
+
