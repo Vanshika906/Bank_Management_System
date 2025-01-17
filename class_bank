@@ -1,0 +1,121 @@
+// Bank class
+class Bank
+{
+private:
+    vector<Customer> customers;
+    vector<Transaction> transactions;
+    int accountNumberCounter = 1; // Unique account number counter
+
+public:
+    void addCustomer(Customer newCustomer)
+    {
+        customers.push_back(newCustomer);
+    }
+
+    Customer *getCustomerById(int customerId)
+    {
+        for (auto &customer : customers)
+        {
+            if (customer.getCustomerId() == customerId)
+            {
+                return &customer;
+            }
+        }
+        return nullptr;
+    }
+
+    Transaction *getTransactionById(int transactionId)
+    {
+        for (auto &transaction : transactions)
+        {
+            if (transaction.getTransactionId() == transactionId)
+            {
+                return &transaction;
+            }
+        }
+        return nullptr;
+    }
+
+    void createAccount(int customerId, double initialBalance)
+    {
+        Customer *customer = getCustomerById(customerId);
+        if (customer)
+        {
+            int newAccountNumber = accountNumberCounter++; // Generate unique account number
+            Account newAccount(newAccountNumber, initialBalance);
+            customer->addAccount(newAccount);
+        }
+    }
+
+    void processTransaction(int accountNumber, double amount, string type){
+        for (auto &customer : customers)
+        {
+            for (auto &account : customer.getAccounts())
+            {
+                if (account.getAccountNumber() == accountNumber)
+                {
+                    if (type == "deposit")
+                    {
+                        account.deposit(amount);
+                        int newTransactionId = static_cast<int>(transactions.size() + 1); // Simplified transaction ID generation
+                        Transaction newTransaction(newTransactionId, accountNumber, amount, type);
+                        transactions.push_back(newTransaction);
+                        return;
+                    }
+                    else if (type == "withdraw")
+                    {
+                        try
+                        {
+                            account.withdraw(amount);
+                            int newTransactionId = static_cast<int>(transactions.size() + 1); // Simplified transaction ID generation
+                            Transaction newTransaction(newTransactionId, accountNumber, amount, type);
+                            transactions.push_back(newTransaction);
+                        }
+                        catch (const invalid_argument &e)
+                        {
+                            cout << e.what() << endl;
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    void displayCustomerDetails(int customerId)
+    {
+        Customer *customer = getCustomerById(customerId);
+        if (customer)
+        {
+            cout << "Customer ID: " << customer->getCustomerId() << endl;
+            cout << "Customer Name: " << customer->getName() << endl;
+            cout << "Accounts:" << endl;
+            for (const auto &account : customer->getAccounts())
+            {
+                cout << "  Account Number: " << account.getAccountNumber() << ", Balance: " << account.getBalance() << endl;
+            }
+        }
+        else
+        {
+            cout << "Customer not found." << endl;
+        }
+    }
+
+    void displayTransactionDetails(int transactionId)
+    {
+        Transaction *transaction = getTransactionById(transactionId);
+        if (transaction)
+        {
+            cout << "Transaction ID: " << transaction->getTransactionId() << endl;
+            cout << "Transaction type: " << transaction->getType() << endl;
+        }
+    }
+
+    void displayAllCustomers()
+    {
+        for (const auto &customer : customers)
+        {
+            displayCustomerDetails(customer.getCustomerId());
+        }
+    }
+};
