@@ -1,0 +1,31 @@
+// Customer class
+class Customer
+{
+private:
+    string name;
+    int customerId;
+    vector<Account> accounts;
+
+public:
+    Customer(string customerName, int id) : name(customerName), customerId(id) {}
+
+    string getName() const
+    {
+        return name;
+    }
+
+    int getCustomerId() const
+    {
+        return customerId;
+    }
+
+    void addAccount(Account newAccount)
+    {
+        accounts.push_back(newAccount);
+    }
+
+    vector<Account> &getAccounts()
+    {
+        return accounts;
+    }
+};
