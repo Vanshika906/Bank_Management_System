@@ -1,0 +1,42 @@
+// Transaction class
+class Transaction
+{
+private:
+    int transactionId;
+    int accountNumber;
+    double amount;
+    string type;
+    time_t timestamp;
+
+public:
+    Transaction(int transId, int accNumber, double amt, string transType)
+        : transactionId(transId), accountNumber(accNumber), amount(amt), type(transType)
+    {
+        timestamp = time(0);
+    }
+
+    int getTransactionId() const
+    {
+        return transactionId;
+    }
+
+    int getAccountNumber() const
+    {
+        return accountNumber;
+    }
+
+    double getAmount() const
+    {
+        return amount;
+    }
+
+    string getType() const
+    {
+        return type;
+    }
+
+    time_t getTimestamp() const
+    {
+        return timestamp;
+    }
+};
