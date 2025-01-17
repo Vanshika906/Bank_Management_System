@@ -1,0 +1,31 @@
+// Main function
+int main()
+{
+    Bank bank;
+
+    // Adding customers
+    Customer customer1("Amit", 1);
+    Customer customer2("Rohan", 2);
+    bank.addCustomer(customer1);
+    bank.addCustomer(customer2);
+
+    // Creating accounts for customers
+    bank.createAccount(1, 1000.0);
+    bank.createAccount(2, 2000.0);
+
+    // Processing transactions
+    bank.processTransaction(1, 500.0, "deposit");
+    bank.processTransaction(2, 3000.0, "withdraw");
+
+    // Displaying customer details
+    bank.displayCustomerDetails(1);
+    bank.displayCustomerDetails(2);
+
+    // Displaying all customers
+    bank.displayAllCustomers();
+
+    // Displaying transaction details
+    bank.displayTransactionDetails(1);
+
+    return 0;
+}
